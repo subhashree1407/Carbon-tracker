@@ -190,28 +190,6 @@ Copy code
 
 ---
 
-## 🚀 Installation & Running Locally
-
-### 1. Clone the repository
-```bash
-git clone https://github.com/subhashree1407/Carbon-tracker.git
-cd Carbon-tracker
-2️⃣ Set up Backend
-bash
-Copy code
-cd Carbon-backend
-npm install
-npm start
-Backend runs on: http://localhost:5000
-
-3️⃣ Set up Frontend
-bash
-Copy code
-cd ../Carbon-frontend
-npm install
-npm run dev
-Frontend runs on: http://localhost:5173
-
 📦 Deployment
 Backend Deployment
 Deploy on Render / Railway
@@ -242,4 +220,5 @@ Let’s build a sustainable future together!
 
 📄 License
 This project is licensed under the MIT License.
+
 
