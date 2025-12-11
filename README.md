@@ -41,21 +41,22 @@ This project supports the vision of **Atmanirbhar Bharat** by promoting environm
 
 Carbon-tracker/
 ├── Carbon-frontend/
-│ └── src/
-│ ├── assets/
-│ ├── components/
-│ ├── context/
-│ ├── pages/
-│ ├── App.jsx
-│ └── main.jsx
+│   └── src/
+│       ├── assets/
+│       ├── components/
+│       ├── context/
+│       ├── pages/
+│       ├── App.jsx
+│       └── main.jsx
 │
 └── Carbon-backend/
-├── controllers/
-├── models/
-├── routes/
-├── middleware/
-├── uploads/
-└── server.js
+    ├── controllers/
+    ├── models/
+    ├── routes/
+    ├── middleware/
+    ├── uploads/
+    └── server.js
+
 
 
 ---
@@ -63,3 +64,4 @@ Carbon-tracker/
 ## ⚙️ Environment Variables
 
 ### **Backend (`Carbon-backend/.env`)**
+
