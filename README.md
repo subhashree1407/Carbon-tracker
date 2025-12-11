@@ -37,8 +37,9 @@ This project supports the vision of **Atmanirbhar Bharat** by promoting environm
 
 ---
 
-## 📁 Folder Structure
 
+## 📁 Folder Structure
+```text
 Carbon-tracker/
 ├── Carbon-frontend/
 │   └── src/
@@ -57,12 +58,13 @@ Carbon-tracker/
     ├── uploads/
     └── server.js
 
-
+```
 
 ---
 
 ## ⚙️ Environment Variables
 
 ### **Backend (`Carbon-backend/.env`)**
+
 
 
