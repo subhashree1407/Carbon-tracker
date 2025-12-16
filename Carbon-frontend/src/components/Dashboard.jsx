@@ -40,24 +40,79 @@ function Dashboard() {
         setIsLoading(true);
         const token = localStorage.getItem("token");
 
-        const [activitiesRes, summaryRes, tipsRes] = await Promise.all([
+        const [activitiesRes, summaryRes] = await Promise.all([
           axios.get(`${API_URL}/api/activities/my`, {
             headers: { Authorization: `Bearer ${token}` },
           }),
           axios.get(`${API_URL}/api/activities/weekly-summary`, {
             headers: { Authorization: `Bearer ${token}` },
-          }),
-          axios.get(`${API_URL}/api/tips`, {
-            headers: { Authorization: `Bearer ${token}` },
           })
         ]);
 
-        setActivities(activitiesRes.data);
+        const fetchedActivities = activitiesRes.data;
+        setActivities(fetchedActivities);
         setWeeklySummary({
           ...summaryRes.data,
           goal: goal ?? summaryRes.data.goal,
         });
-        setTips(tipsRes.data);
+
+        // Calculate total emissions per activity type
+        const emissionsByActivityType = fetchedActivities.reduce((acc, act) => {
+          acc[act.type] = (acc[act.type] || 0) + act.carbonFootprint;
+          return acc;
+        }, {});
+
+        // Sort activity types by total emissions in descending order
+        const sortedActivityTypes = Object.entries(emissionsByActivityType)
+          .sort((a, b) => b[1] - a[1])
+          .map(([type]) => type);
+
+        // Map activity types to tip categories
+        const categoryMap = {
+          transport: "transport",
+          energy: "electricity",
+          food: "diet"
+        };
+
+        // Fetch tips based on activity types or fallback to general tips
+        if (sortedActivityTypes.length > 0) {
+          // Determine how many tips to fetch per category based on activity count
+          let tipCountPerCategory;
+          if (sortedActivityTypes.length === 1) {
+            // 1 activity type: 5 tips from that category
+            tipCountPerCategory = [5];
+          } else if (sortedActivityTypes.length === 2) {
+            // 2 activity types: 3 from highest, 2 from second
+            tipCountPerCategory = [3, 2];
+          } else {
+            // 3+ activity types: 2 from highest, 2 from second, 1 from third
+            tipCountPerCategory = [2, 2, 1];
+          }
+
+          // Fetch tips for each category (up to 3 categories max)
+          const categoriesToFetch = sortedActivityTypes.slice(0, tipCountPerCategory.length);
+          const tipPromises = categoriesToFetch.map((activityType) => {
+            const category = categoryMap[activityType] || activityType;
+            return axios.get(`${API_URL}/api/tips?category=${category}`, {
+              headers: { Authorization: `Bearer ${token}` },
+            }).then(res => res.data).catch(() => []);
+          });
+
+          const tipsResults = await Promise.all(tipPromises);
+
+          // Slice tips according to the distribution and flatten into ordered array
+          const orderedTips = tipsResults.flatMap((tipArray, index) => 
+            tipArray.slice(0, tipCountPerCategory[index])
+          );
+
+          setTips(orderedTips);
+        } else {
+          // Fallback: no activities, fetch general tips
+          const generalTipsRes = await axios.get(`${API_URL}/api/tips`, {
+            headers: { Authorization: `Bearer ${token}` },
+          });
+          setTips(generalTipsRes.data);
+        }
       } catch (err) {
         console.error("Failed to load dashboard data", err);
       } finally {

@@ -352,7 +352,7 @@ function Home() {
             
             <div className="relative">
               <p className="text-sm md:text-base font-semibold uppercase tracking-wide text-emerald-100">
-                Today&apos;s Snapshot (Demo)
+                Today&apos;s Snapshot
               </p>
               <p className="mt-4 text-4xl md:text-5xl font-bold">
                 482 <span className="text-2xl md:text-3xl">kg CO₂</span>

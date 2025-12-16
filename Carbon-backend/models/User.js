@@ -3,8 +3,8 @@ const mongoose = require("mongoose"); // ✅ Add this line at the top
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
-    required: true,
-    trim: true
+    trim: true,
+    default: null
   },
   email: {
     type: String,
@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true
+    default: null
   },
   hasLoggedIn: {
     type: Boolean,
@@ -27,6 +27,20 @@ const userSchema = new mongoose.Schema({
   weeklyGoal: {
     type: Number,
     default: 50 // Default weekly CO₂ goal in kg
+  },
+  
+  // OTP-based email verification fields
+  otp: {
+    type: String,
+    default: null
+  },
+  otpExpiry: {
+    type: Date,
+    default: null
+  },
+  isVerified: {
+    type: Boolean,
+    default: false
   }
   
 }, { timestamps: true });

@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { ToastContainer } from "react-toastify";
 import Login from "./components/Auth/Login";
 import Register from "./components/Auth/Register";
+import VerifyOtp from "./components/Auth/VerifyOtp";
+import ResetPassword from "./components/Auth/ResetPassword";
 import ActivityForm from "./components/ActivityForm";
 import Dashboard from "./components/Dashboard";
 import Leaderboard from "./components/Leaderboard";
@@ -34,7 +36,7 @@ function App() {
   };
 
   // Hide navbar on these routes
-  const hideNavbarRoutes = ["/login", "/register", "/forgot-password"];
+  const hideNavbarRoutes = ["/login", "/register", "/forgot-password", "/verify-otp", "/reset-password"];
   const shouldHideNavbar = hideNavbarRoutes.includes(location.pathname);
 
   return (
@@ -44,6 +46,8 @@ function App() {
         <Route path="/login" element={<Login onLogin={handleLogin} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/verify-otp" element={<VerifyOtp />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
         <Route path="/" element={<PrivateRoute element={<Home />} />} />
         <Route path="/dashboard" element={<PrivateRoute element={<Dashboard />} />} />
         <Route path="/activity" element={<PrivateRoute element={<ActivityForm />} />} />

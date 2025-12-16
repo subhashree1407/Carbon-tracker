@@ -74,9 +74,13 @@ function Login({ onLogin }) {
             />
           </div>
 
-          <div className="text-right text-sm text-blue-500 hover:underline cursor-pointer">
+          <Link
+            to="/forgot-password"
+            className="block text-right text-sm text-blue-500 hover:underline"
+          >
             Forgot password?
-          </div>
+          </Link>
+
 
           <button
             type="submit"
